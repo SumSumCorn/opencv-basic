@@ -85,6 +85,15 @@ def game_mode(cap):
                 (255, 0, 0),
                 2,
             )
+            cv2.putText(
+                frame,
+                f"Computer's choice: {random.choice(['rock','sissors','paper'])}",
+                (50, 400),
+                cv2.FONT_HERSHEY_COMPLEX,
+                1,
+                (0, 0, 255),
+                2,
+            )
             ###
             ### 설명 :
             ###
@@ -191,40 +200,50 @@ def game_mode(cap):
             #     2,
             # )
 
-            # cv2.putText(
-            #     frame,
-            #     f"Computer chose: {st.session_state.computer_choice}",
-            #     (50, 50),
-            #     cv2.FONT_HERSHEY_COMPLEX,
-            #     1,
-            #     (0, 255, 255),
-            #     2,
-            # )
+            cv2.putText(
+                frame,
+                f"Computer chose: {st.session_state.computer_choice}",
+                (50, 50),
+                cv2.FONT_HERSHEY_COMPLEX,
+                1,
+                (0, 255, 255),
+                2,
+            )
 
-            # cv2.putText(
-            #     frame,
-            #     st.session_state.result,
-            #     (50, 100),
-            #     cv2.FONT_HERSHEY_COMPLEX,
-            #     1,
-            #     (255, 0, 0),
-            #     2,
-            # )
+            cv2.putText(
+                frame,
+                f"You chose: {st.session_state.final_hand_shape}",
+                (50, 100),
+                cv2.FONT_HERSHEY_COMPLEX,
+                1,
+                (0, 255, 255),
+                2,
+            )
+
+            cv2.putText(
+                frame,
+                st.session_state.result,
+                (50, 150),
+                cv2.FONT_HERSHEY_COMPLEX,
+                1,
+                (255, 0, 0),
+                2,
+            )
             st.session_state.input_start_time = None
             st.session_state.output_start_time = None
             st.session_state.is_started = False
-        ###
-        ### 설명 :
-        ###
-        cv2.putText(
-            frame,
-            f"Score: User - {st.session_state.user_score}, Computer - {st.session_state.computer_score}",
-            (50, 400),
-            cv2.FONT_HERSHEY_COMPLEX,
-            1,
-            (0, 255, 0),
-            2,
-        )
+            ###
+            ### 설명 :
+            ###
+            # cv2.putText(
+            #     frame,
+            #     f"Score: User - {st.session_state.user_score}, Computer - {st.session_state.computer_score}",
+            #     (50, 400),
+            #     cv2.FONT_HERSHEY_COMPLEX,
+            #     1,
+            #     (0, 255, 0),
+            #     2,
+            # )
 
         ###
         ### 설명:
@@ -471,12 +490,12 @@ def reset():
 if st.session_state.is_started:
     game_mode(cap)
     with st.container():
-        user, com, total = st.columns(3)
-        user.metric("이긴횟수", st.session_state.user_score)
-        com.metric("진 횟수", st.session_state.computer_score)
-        total.metric("전체 판수", st.session_state.total_count)
-        st.button("다시 도전?", key="resume_button", type="primary", on_click=toggle)
-        st.button("종료", key="reset_button", on_click=reset)
+        col1, col2, col3 = st.columns(3)
+        col1.metric("이긴횟수", st.session_state.user_score)
+        col2.metric("진 횟수", st.session_state.computer_score)
+        col3.metric("전체 판수", st.session_state.total_count)
+        col1.button("다시 도전?", key="resume_button", type="primary", on_click=toggle)
+        col3.button("종료", key="reset_button", on_click=reset)
 else:
     with st.empty():
         st.button("게임시작", key="start_button", type="primary", on_click=toggle)
