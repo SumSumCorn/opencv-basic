@@ -1,3 +1,6 @@
+###
+
+###
 import streamlit as st
 import cv2
 import mediapipe as mp
@@ -6,6 +9,7 @@ import random
 import time
 
 
+#
 def distance(p1, p2):
     return math.dist((p1.x, p1.y), (p2.x, p2.y))
 
@@ -14,9 +18,10 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 
-st.title("Rock-Paper-Scissors Game with MediaPipe Hands")
+st.title("가위바위보 게임!!")
 
 # Initial states
+#
 if "input_start_time" not in st.session_state:
     st.session_state.input_start_time = None
 if "output_start_time" not in st.session_state:
@@ -37,6 +42,8 @@ if not cap.isOpened():
     st.error("Camera is not opened")
     st.stop()
 
+
+#
 hands = mp_hands.Hands()
 
 frame_slot = st.empty()
@@ -188,7 +195,5 @@ while True:
     )
 
     frame_slot.image(frame, channels="BGR")
-    # if st.button("Stop"):
-    #     break
 
 cap.release()
